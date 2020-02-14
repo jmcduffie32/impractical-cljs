@@ -10,6 +10,13 @@
                                  :snake {:body '([100 100])
                                          :dir [1 0]}}}))
 
+(def initial-game-state {:apples '([250 250])
+                         :snake {:body '([100 100])
+                                 :dir [1 0]}})
+
+(defn init-game [game-state]
+  (swap! app-state #(assoc % :game game-state)))
+
 (def projects
   {:silly-names silly-name-component})
 
@@ -73,6 +80,7 @@
     ;; (init-viz)
     (reagent/render-component [app-container]
                               (. js/document (getElementById "app")))
+    (init-game initial-game-state)
     (listen-for-keypresses)
     (js/setInterval tick 1000)
     ))
